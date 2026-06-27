@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Tema 2 — Cortes Generales, Gobierno y Administración | Opositar en Valencia</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --naranja: #d97706;
+    --naranja-claro: #fef3c7;
+    --naranja-borde: #f59e0b;
+    --azul-oscuro: #1e293b;
+    --texto: #374151;
+    --texto-suave: #6b7280;
+    --borde: #e5e7eb;
+    --fondo: #fafaf9;
+    --blanco: #ffffff;
+    --verde: #166534;
+    --verde-bg: #f0fdf4;
+    --verde-borde: #86efac;
+    --rojo: #991b1b;
+    --rojo-bg: #fef2f2;
+    --rojo-borde: #fca5a5;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+    padding: 0;
+  }
+  .header-top {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.4rem 1.5rem 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+  .header-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .header-textos { flex: 1; }
+  .header-site {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--naranja);
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .header-titulo {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+    margin-top: 4px;
+  }
+  .header-meta {
+    background: var(--naranja-claro);
+    border-top: 1px solid #fde68a;
+    padding: 0.55rem 1.5rem;
+  }
+  .header-meta-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 0.83rem;
+    color: #92400e;
+    font-weight: 500;
+  }
+  .header-meta-inner span::before { margin-right: 4px; }
+
+  /* ── BARRA PROGRESO ── */
+  .barra-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--blanco);
+    border-bottom: 1px solid var(--borde);
+    padding: 0.6rem 1.5rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .barra-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .barra-track {
+    flex: 1;
+    height: 6px;
+    background: #f3f4f6;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .barra-fill {
+    height: 100%;
+    background: var(--naranja);
+    border-radius: 99px;
+    transition: width 0.35s ease;
+    width: 0%;
+  }
+  .barra-num {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    white-space: nowrap;
+    min-width: 52px;
+  }
+  .barra-score {
+    font-size: 13px;
+    color: var(--texto-suave);
+    white-space: nowrap;
+  }
+  .barra-score .ok { color: var(--verde); font-weight: 600; }
+  .barra-score .ko { color: var(--rojo); font-weight: 600; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem;
+  }
+
+  /* ── CARD PREGUNTA ── */
+  .card {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 1.5rem 1.6rem;
+    margin-bottom: 1.4rem;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.06); }
+
+  .card-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--naranja);
+    margin-bottom: 0.5rem;
+  }
+  .card-pregunta {
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.55;
+    color: var(--azul-oscuro);
+    margin-bottom: 1.1rem;
+  }
+
+  /* ── OPCIONES ── */
+  .opciones { display: flex; flex-direction: column; gap: 0.45rem; }
+  .opcion {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.7rem 1rem;
+    border: 1.5px solid var(--borde);
+    border-radius: 7px;
+    cursor: pointer;
+    background: var(--blanco);
+    text-align: left;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.93rem;
+    color: var(--texto);
+    line-height: 1.5;
+    transition: border-color 0.15s, background 0.15s;
+    width: 100%;
+  }
+  .opcion:hover:not(:disabled) {
+    border-color: var(--naranja-borde);
+    background: var(--naranja-claro);
+  }
+  .opcion .letra {
+    font-weight: 700;
+    color: var(--naranja);
+    min-width: 18px;
+    font-size: 0.85rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .opcion.correcta {
+    border-color: var(--verde-borde);
+    background: var(--verde-bg);
+    color: var(--verde);
+  }
+  .opcion.correcta .letra { color: #15803d; }
+  .opcion.incorrecta {
+    border-color: var(--rojo-borde);
+    background: var(--rojo-bg);
+    color: var(--rojo);
+  }
+  .opcion.incorrecta .letra { color: var(--rojo); }
+  .opcion:disabled { cursor: default; }
+
+  /* ── EXPLICACIÓN ── */
+  .explicacion {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.9rem 1rem 0.9rem 1.1rem;
+    background: #fffbeb;
+    border-left: 3px solid var(--naranja);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--texto);
+  }
+  .explicacion.visible { display: block; animation: fadeIn 0.22s ease; }
+  .explicacion strong { color: var(--azul-oscuro); }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESULTADO FINAL ── */
+  .resultado {
+    display: none;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 2.5rem 2rem 2rem;
+    margin: 1.5rem 0 2rem;
+    text-align: center;
+  }
+  .resultado.visible { display: block; animation: fadeIn 0.3s ease; }
+  .resultado-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--naranja);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .resultado h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    margin-bottom: 0.3rem;
+  }
+  .resultado-nota {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    line-height: 1;
+    margin: 1rem 0 0.3rem;
+    font-family: 'Lora', serif;
+  }
+  .resultado-nota span { color: var(--naranja); }
+  .calif-badge {
+    display: inline-block;
+    padding: 5px 16px;
+    border-radius: 99px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0.6rem 0 1.5rem;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+  }
+  .stat {
+    background: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 0.9rem 0.5rem;
+  }
+  .stat-num { font-size: 1.9rem; font-weight: 700; font-family: 'Lora', serif; }
+  .stat-lab { font-size: 0.78rem; color: var(--texto-suave); margin-top: 2px; }
+  .resultado-hint {
+    font-size: 0.85rem;
+    color: var(--texto-suave);
+    margin-bottom: 1.2rem;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.7rem 1.6rem;
+    border-radius: 7px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s;
+    text-decoration: none;
+  }
+  .btn-naranja {
+    background: var(--naranja);
+    color: white;
+  }
+  .btn-naranja:hover { background: #b45309; transform: translateY(-1px); }
+
+  /* ── SEPARADOR ── */
+  .divider {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+    margin: 2rem 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--borde);
+  }
+
+  @media (max-width: 580px) {
+    main { padding: 1.2rem 1rem 4rem; }
+    .card { padding: 1.1rem 1.1rem; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .header-top { padding: 1rem; gap: 0.8rem; }
+    .header-meta { padding: 0.5rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <img class="header-logo"
+      src="https://opositorgva.wordpress.com/wp-content/uploads/2024/04/cropped-opositar-en-valencia-logo-sin-fondo.png"
+      alt="Opositar en Valencia"
+      onerror="this.style.display='none'">
+    <div class="header-textos">
+      <div class="header-site">Opositar en Valencia · GVA</div>
+      <div class="header-titulo">Tema 2 — Cortes Generales, Gobierno y Administración</div>
+      <div class="header-sub">Títulos III, IV y V de la Constitución Española · Subalterno APT-APF</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="header-meta-inner">
+      <span>📋 50 preguntas</span>
+      <span>🎯 Nivel medio-alto</span>
+      <span>🔀 Orden aleatorio en cada intento</span>
+      <span>✅ Explicación en cada respuesta</span>
+    </div>
+  </div>
+</header>
+
+<div class="barra-wrap">
+  <div class="barra-inner">
+    <div class="barra-track"><div class="barra-fill" id="barraFill"></div></div>
+    <span class="barra-num" id="barraNum">0 / 50</span>
+    <span class="barra-score"><span class="ok" id="scoreOk">✓ 0</span> &nbsp;<span class="ko" id="scoreKo">✗ 0</span></span>
+  </div>
+</div>
+
+<main id="mainContent"></main>
+
+<script>
+const BANCO = [
+  {
+    p: "Según el artículo 66 CE, ¿cuál es la composición de las Cortes Generales?",
+    ops: ["El Congreso de los Diputados y el Tribunal Constitucional", "El Congreso de los Diputados y el Senado", "El Congreso de los Diputados, el Senado y el Consejo de Estado", "El Congreso de los Diputados, el Senado y el Defensor del Pueblo"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 66.1 CE establece que las Cortes Generales están formadas por el Congreso de los Diputados y el Senado. El Tribunal Constitucional, el Consejo de Estado y el Defensor del Pueblo son órganos constitucionales distintos, con funciones propias ajenas a la composición de las Cortes."
+  },
+  {
+    p: "El artículo 66.2 CE atribuye a las Cortes Generales tres grandes funciones. ¿Cuál de las siguientes NO figura entre ellas?",
+    ops: ["Ejercer la potestad legislativa del Estado", "Aprobar los Presupuestos Generales del Estado", "Controlar la acción del Gobierno", "Nombrar a los magistrados del Tribunal Supremo"],
+    c: 3,
+    exp: "<strong>Respuesta correcta: D.</strong> El art. 66.2 CE enumera como funciones de las Cortes: potestad legislativa, aprobación de Presupuestos y control del Gobierno, más las que la Constitución les atribuya. El nombramiento de magistrados del Tribunal Supremo corresponde al Consejo General del Poder Judicial, no a las Cortes."
+  },
+  {
+    p: "¿Qué consecuencia tiene la inviolabilidad de las Cortes Generales proclamada en el artículo 66.3 CE?",
+    ops: ["Que sus miembros no pueden ser detenidos nunca", "Que nadie puede atentar jurídicamente contra su existencia, composición o funciones como institución", "Que sus sesiones son siempre secretas", "Que sus acuerdos no pueden ser impugnados ante ningún tribunal"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> La inviolabilidad institucional del art. 66.3 CE protege a las Cortes como institución frente a cualquier acto que pretenda subvertir su existencia, composición o funciones. Es diferente de la inviolabilidad personal de los parlamentarios (art. 71.1 CE) y de la inmunidad parlamentaria (art. 71.2 CE)."
+  },
+  {
+    p: "Conforme al artículo 67 CE, ¿puede un Diputado al Congreso ser simultáneamente miembro del Senado?",
+    ops: ["Sí, si su partido así lo decide", "Sí, pero solo durante el primer año de mandato", "No, nadie puede ser miembro de las dos Cámaras simultáneamente", "Sí, pero pierde la asignación de una de las Cámaras"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 67.1 CE prohíbe taxativamente ser miembro de las dos Cámaras simultáneamente. Tampoco permite acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso. Se trata de una incompatibilidad de rango constitucional."
+  },
+  {
+    p: "Según el artículo 67.2 CE, los miembros de las Cortes Generales no estarán ligados por mandato imperativo. ¿Qué significa esto en la práctica?",
+    ops: ["Que pueden ausentarse de las votaciones sin justificación", "Que no están obligados a seguir las instrucciones de sus electores ni de sus grupos parlamentarios a la hora de votar, siendo su voto libre", "Que no deben cumplir las órdenes de la Mesa de la Cámara", "Que pueden cambiar de grupo parlamentario en cualquier momento sin restricciones"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> La prohibición de mandato imperativo implica que los parlamentarios representan a toda la Nación (no solo a sus electores) y no pueden recibir instrucciones vinculantes de partidos, grupos o electores. El voto no puede ser objeto de compromiso previo exigible. Es una garantía de la función representativa."
+  },
+  {
+    p: "¿Entre qué límites se sitúa el número de Diputados del Congreso según el artículo 68.1 CE?",
+    ops: ["Mínimo 250, máximo 350", "Mínimo 300, máximo 400", "Mínimo 350, máximo 450", "Mínimo 200, máximo 300"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 68.1 CE fija que el Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados. Actualmente la Ley Orgánica del Régimen Electoral General establece 350 Diputados, cifra que se sitúa dentro del margen constitucional."
+  },
+  {
+    p: "Según el artículo 68.2 CE, ¿cuál es la circunscripción electoral para el Congreso de los Diputados?",
+    ops: ["El municipio", "La Comunidad Autónoma", "La provincia, siendo Ceuta y Melilla circunscripciones propias con un Diputado cada una", "La región histórica"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 68.2 CE establece la provincia como circunscripción electoral. Ceuta y Melilla tienen su propia representación con un Diputado cada una. La ley distribuye el total de Diputados asignando una representación mínima inicial a cada circunscripción y el resto en proporción a la población."
+  },
+  {
+    p: "¿Cuál es el mandato del Congreso de los Diputados y qué ocurre con el mandato de los Diputados el día de la disolución anticipada de la Cámara?",
+    ops: ["Cuatro años; el mandato continúa hasta la constitución del nuevo Congreso", "Cuatro años; el mandato termina el día de la disolución de la Cámara", "Cinco años; el mandato termina el día de la disolución de la Cámara", "Cuatro años; el mandato solo termina transcurridos los cuatro años, no antes"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 68.4 CE dispone que el Congreso es elegido por cuatro años y que el mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara, lo que ocurra antes. La disolución anticipada pone fin al mandato individual de cada Diputado."
+  },
+  {
+    p: "En qué plazo deben convocarse las elecciones al Congreso tras la terminación del mandato, según el artículo 68.6 CE?",
+    ops: ["Entre los quince días y los treinta días", "Entre los treinta días y los sesenta días", "En los noventa días siguientes", "En los cuarenta y cinco días siguientes"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 68.6 CE establece que las elecciones tendrán lugar entre los treinta y los sesenta días desde la terminación del mandato. Una vez celebradas, el Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+  },
+  {
+    p: "¿Qué naturaleza tiene el Senado según el artículo 69.1 CE?",
+    ops: ["La Cámara de control del ejecutivo", "La Cámara de representación territorial", "La Cámara de revisión legislativa", "La Cámara de representación de los partidos políticos"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 69.1 CE define expresamente al Senado como la Cámara de representación territorial. Esta definición constitucional justifica, entre otras cosas, que las Comunidades Autónomas designen senadores de forma adicional a los elegidos directamente en las provincias."
+  },
+  {
+    p: "¿Cuántos Senadores se eligen por sufragio directo en cada provincia peninsular, según el artículo 69.2 CE?",
+    ops: ["Dos senadores por provincia", "Tres senadores por provincia", "Cuatro senadores por provincia", "Un número variable según la población de la provincia"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 69.2 CE establece que en cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto. Esta regla es uniforme para todas las provincias peninsulares, sin atender a criterios de población, lo que garantiza la representación territorial igualitaria."
+  },
+  {
+    p: "Según el artículo 69.5 CE, ¿cómo se determina el número de Senadores que designa cada Comunidad Autónoma?",
+    ops: ["Un Senador fijo por Comunidad Autónoma, con independencia de la población", "Un Senador y otro más por cada millón de habitantes de su respectivo territorio", "Dos Senadores fijos más uno por cada 500.000 habitantes", "Según el porcentaje de PIB de cada Comunidad Autónoma"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 69.5 CE establece la fórmula de un Senador base más uno adicional por cada millón de habitantes. La designación corresponde a la Asamblea legislativa o al órgano colegiado superior de la Comunidad, según los Estatutos, que deben asegurar la adecuada representación proporcional."
+  },
+  {
+    p: "Conforme al artículo 70.1 CE, ¿qué cargo está expresamente incluido entre los supuestos de inelegibilidad e incompatibilidad parlamentaria?",
+    ops: ["El Presidente del Gobierno", "El Defensor del Pueblo", "Los miembros de la Junta de Gobierno del Banco de España", "Los Secretarios de Estado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 70.1 CE enumera entre los supuestos de inelegibilidad e incompatibilidad: componentes del Tribunal Constitucional, altos cargos de la Administración (salvo miembros del Gobierno), el Defensor del Pueblo, Magistrados, Jueces y Fiscales en activo, militares y miembros de las Fuerzas de Seguridad en activo, y miembros de las Juntas Electorales."
+  },
+  {
+    p: "La inviolabilidad parlamentaria del artículo 71.1 CE protege a los Diputados y Senadores por las opiniones manifestadas en el ejercicio de sus funciones. ¿Es esta protección temporal o permanente?",
+    ops: ["Solo durante el período de mandato", "Solo durante las sesiones plenarias", "Es permanente: protege incluso una vez finalizado el mandato por las opiniones emitidas en su ejercicio", "Es permanente solo respecto de las opiniones emitidas en el Pleno, no en Comisiones"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> La inviolabilidad del art. 71.1 CE protege las opiniones manifestadas en el ejercicio de las funciones parlamentarias y tiene carácter permanente: el parlamentario no puede ser perseguido por ellas ni durante ni después del mandato. Es distinta de la inmunidad (art. 71.2 CE), que es temporal."
+  },
+  {
+    p: "Según el artículo 71.2 CE, ¿cuándo puede ser detenido un Diputado o Senador durante el período de su mandato?",
+    ops: ["Nunca, gozan de inmunidad total", "Solo en caso de flagrante delito", "Cuando así lo acuerde el Tribunal Supremo sin necesidad de suplicatorio", "Cuando lo autorice el Gobierno mediante decreto"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 71.2 CE establece que durante el mandato los parlamentarios gozan de inmunidad y solo podrán ser detenidos en caso de flagrante delito. Para ser inculpados o procesados se requiere la previa autorización (suplicatorio) de la Cámara respectiva."
+  },
+  {
+    p: "¿Cuáles son los dos períodos ordinarios de sesiones de las Cámaras según el artículo 73 CE?",
+    ops: ["De enero a abril y de julio a octubre", "De septiembre a diciembre y de febrero a junio", "De octubre a enero y de marzo a julio", "De septiembre a enero y de marzo a junio"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 73.1 CE fija los dos períodos ordinarios de sesiones: el primero de septiembre a diciembre y el segundo de febrero a junio. Fuera de estos períodos las Cámaras pueden reunirse en sesiones extraordinarias, que deben convocarse con un orden del día determinado."
+  },
+  {
+    p: "¿Quién puede solicitar la convocatoria de sesiones extraordinarias de las Cámaras según el artículo 73.2 CE?",
+    ops: ["Solo el Gobierno", "El Gobierno, la Diputación Permanente o la mayoría absoluta de los miembros de cualquiera de las Cámaras", "El Presidente del Congreso, el Presidente del Senado o el Gobierno", "La mayoría de tres quintos de cualquiera de las Cámaras"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> Según el art. 73.2 CE, las sesiones extraordinarias pueden ser solicitadas por el Gobierno, la Diputación Permanente o la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deben convocarse sobre un orden del día determinado y clausurarse cuando este se agote."
+  },
+  {
+    p: "Conforme al artículo 75.3 CE, ¿qué materias quedan exceptuadas de la posibilidad de delegación en las Comisiones Legislativas Permanentes?",
+    ops: ["Los presupuestos, los tratados internacionales y las leyes de bases", "La reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado", "Las leyes orgánicas y los presupuestos únicamente", "Solo la reforma constitucional y las leyes orgánicas"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 75.3 CE excepciona de la delegación legislativa en comisiones: la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado. Estas materias deben ser debatidas y votadas siempre en Pleno."
+  },
+  {
+    p: "Según el artículo 76.1 CE, ¿son vinculantes para los Tribunales las conclusiones de las Comisiones de investigación?",
+    ops: ["Sí, siempre son vinculantes para todos los órganos del Estado", "No, sus conclusiones no son vinculantes para los Tribunales, aunque el resultado puede comunicarse al Ministerio Fiscal", "Solo son vinculantes para el Gobierno, no para los Tribunales", "Solo son vinculantes si la comisión fue creada por acuerdo de ambas Cámaras"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 76.1 CE establece expresamente que las conclusiones de las Comisiones de investigación no serán vinculantes para los Tribunales ni afectarán a las resoluciones judiciales. Sin embargo, el resultado de la investigación puede comunicarse al Ministerio Fiscal para el ejercicio de las acciones oportunas."
+  },
+  {
+    p: "¿Cuántos miembros compone como mínimo la Diputación Permanente de cada Cámara según el artículo 78.1 CE?",
+    ops: ["Al menos quince miembros", "Al menos veintiún miembros", "Al menos veinticinco miembros", "Al menos treinta y uno miembros"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 78.1 CE dispone que en cada Cámara habrá una Diputación Permanente compuesta por un mínimo de veintiún miembros, que representarán a los grupos parlamentarios en proporción a su importancia numérica. La Diputación Permanente vela por los poderes de las Cámaras cuando estas no están reunidas."
+  },
+  {
+    p: "¿Para qué quórum de asistencia deben estar reunidas las Cámaras para poder adoptar acuerdos válidamente, según el artículo 79 CE?",
+    ops: ["Solo deben estar presentes el Presidente y la Mesa", "Deben estar presentes al menos un tercio de sus miembros", "Deben estar reunidas con asistencia de la mayoría de sus miembros", "Deben estar presentes todos sus miembros"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 79.1 CE exige que para adoptar acuerdos las Cámaras deben estar reunidas reglamentariamente y con asistencia de la mayoría de sus miembros (quórum de asistencia). Los acuerdos, además, deben ser aprobados por mayoría de los presentes, salvo las mayorías especiales previstas por la Constitución o los Reglamentos."
+  },
+  {
+    p: "Según el artículo 81.1 CE, ¿cuáles son las leyes orgánicas?",
+    ops: ["Las leyes aprobadas por el Congreso y ratificadas por el Senado", "Las relativas al desarrollo de derechos fundamentales y libertades públicas, las que aprueben Estatutos de Autonomía y el régimen electoral general, y las demás previstas en la Constitución", "Todas las leyes aprobadas por mayoría absoluta del Congreso", "Las que regulan el funcionamiento del Gobierno y la Administración"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 81.1 CE define las leyes orgánicas como las relativas al desarrollo de los derechos fundamentales y libertades públicas, las que aprueban los Estatutos de Autonomía, las del régimen electoral general y las demás previstas en la Constitución. No toda ley aprobada por mayoría absoluta es orgánica; debe versar sobre esas materias."
+  },
+  {
+    p: "¿Qué mayoría exige el artículo 81.2 CE para la aprobación, modificación o derogación de una ley orgánica?",
+    ops: ["Mayoría simple del Congreso en segunda lectura", "Mayoría de tres quintos de ambas Cámaras", "Mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto", "Mayoría absoluta del Senado"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 81.2 CE exige la mayoría absoluta del Congreso de los Diputados en una votación final sobre el conjunto del proyecto para aprobar, modificar o derogar una ley orgánica. El Senado interviene en el procedimiento ordinario, pero es el Congreso quien decide finalmente con dicha mayoría."
+  },
+  {
+    p: "¿Qué prohíbe el artículo 83 CE respecto de las leyes de bases?",
+    ops: ["Que regulen más de una materia en el mismo texto", "Autorizar la modificación de la propia ley de bases y facultar para dictar normas con carácter retroactivo", "Que sean tramitadas por el procedimiento de urgencia", "Que contengan disposiciones de carácter sancionador"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 83 CE establece dos prohibiciones taxativas para las leyes de bases: no podrán en ningún caso autorizar la modificación de la propia ley de bases, ni facultar para dictar normas con carácter retroactivo. Estas limitaciones protegen la seguridad jurídica y la reserva de ley frente a la delegación legislativa."
+  },
+  {
+    p: "¿Qué nombre reciben las disposiciones del Gobierno que contengan legislación delegada, según el artículo 85 CE?",
+    ops: ["Decretos Reales", "Decretos de delegación", "Decretos Legislativos", "Decretos-leyes"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 85 CE dispone que las disposiciones del Gobierno que contengan legislación delegada recibirán el título de Decretos Legislativos. No deben confundirse con los Decretos-leyes (art. 86 CE), que son disposiciones provisionales dictadas por razón de extraordinaria y urgente necesidad, sin previa delegación legislativa."
+  },
+  {
+    p: "Según el artículo 86.1 CE, ¿qué materias no pueden ser reguladas por Decreto-ley?",
+    ops: ["Las materias propias de ley ordinaria", "El ordenamiento de las instituciones básicas del Estado, los derechos, deberes y libertades del Título I, el régimen de las CCAA y el Derecho electoral general", "Las materias reservadas a ley orgánica y los tratados internacionales", "Los Presupuestos Generales del Estado y las leyes de acompañamiento"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 86.1 CE veda al Decreto-ley afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades ciudadanas regulados en el Título I, al régimen de las Comunidades Autónomas y al Derecho electoral general. Estas exclusiones garantizan que materias de especial relevancia constitucional solo se regulen por ley parlamentaria."
+  },
+  {
+    p: "¿En qué plazo debe el Congreso pronunciarse sobre la convalidación o derogación de un Decreto-ley, según el artículo 86.2 CE?",
+    ops: ["En el plazo de quince días", "En el plazo de treinta días siguientes a su promulgación", "En el plazo de dos meses", "En el plazo de cuarenta y cinco días"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 86.2 CE establece que los Decretos-leyes deben ser sometidos a debate y votación de totalidad en el Congreso en el plazo de los treinta días siguientes a su promulgación. El Congreso debe pronunciarse expresamente sobre su convalidación o derogación dentro de dicho plazo."
+  },
+  {
+    p: "Según el artículo 87.1 CE, ¿a quiénes corresponde la iniciativa legislativa?",
+    ops: ["Exclusivamente al Gobierno y al Congreso", "Al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras", "Al Gobierno, a las Asambleas autonómicas y a los ciudadanos", "Al Gobierno, al Congreso, al Senado y al Tribunal Constitucional"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 87.1 CE atribuye la iniciativa legislativa al Gobierno (proyectos de ley), al Congreso y al Senado (proposiciones de ley). Además, el art. 87.2 CE permite a las Asambleas de las CCAA solicitar proyectos de ley o remitir proposiciones, y el art. 87.3 CE regula la iniciativa legislativa popular."
+  },
+  {
+    p: "¿Cuántas firmas acreditadas exige como mínimo el artículo 87.3 CE para la iniciativa legislativa popular?",
+    ops: ["250.000 firmas", "500.000 firmas", "750.000 firmas", "1.000.000 firmas"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 87.3 CE establece que para la iniciativa popular se exigirán no menos de 500.000 firmas acreditadas. Esta iniciativa no procede en materias propias de ley orgánica, tributarias, de carácter internacional ni en lo relativo a la prerrogativa de gracia."
+  },
+  {
+    p: "¿En qué plazo puede el Senado oponer su veto o introducir enmiendas a un proyecto de ley aprobado por el Congreso, conforme al artículo 90.2 CE?",
+    ops: ["En el plazo de un mes desde la recepción del texto", "En el plazo de dos meses desde la recepción del texto", "En el plazo de tres meses desde la recepción del texto", "En el plazo de veinte días naturales siempre"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 90.2 CE otorga al Senado un plazo de dos meses desde la recepción del texto para oponer su veto (por mayoría absoluta) o introducir enmiendas. Este plazo se reduce a veinte días naturales en los proyectos declarados urgentes por el Gobierno o el Congreso (art. 90.3 CE)."
+  },
+  {
+    p: "Si el Senado vetó por mayoría absoluta un proyecto de ley, ¿cómo puede el Congreso superar ese veto según el artículo 90.2 CE?",
+    ops: ["El Congreso no puede superar el veto del Senado", "Ratificando el texto inicial por mayoría absoluta, o por mayoría simple transcurridos dos meses desde la interposición del veto", "Solo por mayoría de tres quintos del Congreso", "Convocando una Comisión Mixta que elabore un texto de consenso"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 90.2 CE prevé que el Congreso puede superar el veto del Senado ratificando el texto inicial por mayoría absoluta, o bien por mayoría simple una vez transcurridos dos meses desde la interposición del veto. El Congreso tiene la última palabra, lo que refleja la primacía del Congreso en el bicameralismo imperfecto español."
+  },
+  {
+    p: "¿En qué plazo debe el Rey sancionar y promulgar las leyes aprobadas por las Cortes Generales, según el artículo 91 CE?",
+    ops: ["En el plazo de diez días", "En el plazo de quince días", "En el plazo de un mes", "En el plazo de treinta días hábiles"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 91 CE establece que el Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación. La sanción regia es un acto debido y no puede ser rehusada; es un acto formal sin carácter discrecional."
+  },
+  {
+    p: "Según el artículo 92.2 CE, ¿quién convoca el referéndum consultivo y quién lo autoriza?",
+    ops: ["Lo convoca el Gobierno, autorizado por el Congreso", "Lo convoca el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso", "Lo convoca el Congreso, mediante propuesta del Gobierno", "Lo convoca el Rey, a propuesta del Congreso, sin necesidad de refrendo"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 92.2 CE establece que el referéndum consultivo será convocado por el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados. Se trata, por tanto, de un mecanismo que requiere la confluencia de tres actores: Congreso (autorización), Presidente del Gobierno (propuesta) y Rey (convocatoria)."
+  },
+  {
+    p: "¿Qué función esencial atribuye el artículo 97 CE al Gobierno?",
+    ops: ["Dirigir la política exterior únicamente y representar al Estado en organismos internacionales", "Dirigir la política interior y exterior, la Administración civil y militar y la defensa del Estado; ejercer la función ejecutiva y la potestad reglamentaria", "Controlar la acción del poder legislativo y velar por la constitucionalidad de las leyes", "Administrar los bienes del patrimonio nacional y gestionar los recursos del Estado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 97 CE contiene la cláusula general de atribución de funciones al Gobierno: dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado, y ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+  },
+  {
+    p: "Según el artículo 98.1 CE, ¿qué miembros componen el Gobierno?",
+    ops: ["El Presidente, los Ministros y los altos cargos de la Administración General del Estado", "El Presidente, los Vicepresidentes (en su caso), los Ministros y los demás miembros que establezca la ley", "El Presidente, los Vicepresidentes, los Ministros y los Secretarios de Estado", "El Presidente, los Ministros y el Fiscal General del Estado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 98.1 CE establece que el Gobierno se compone del Presidente, de los Vicepresidentes (en su caso), de los Ministros y de los demás miembros que establezca la ley. Los Secretarios de Estado son miembros de la Administración, pero no forman parte del Gobierno a efectos constitucionales."
+  },
+  {
+    p: "Conforme al artículo 99.3 CE, ¿qué mayoría se requiere en primera votación de investidura para que el candidato obtenga la confianza del Congreso?",
+    ops: ["Mayoría simple de los Diputados presentes", "Mayoría absoluta de los miembros del Congreso", "Mayoría de tres quintos de los miembros del Congreso", "Mayoría de dos tercios de los miembros del Congreso"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 99.3 CE exige mayoría absoluta de los miembros del Congreso en la primera votación de investidura. Si no se alcanza, cuarenta y ocho horas después se somete la misma propuesta a nueva votación, siendo suficiente la mayoría simple. Solo si tampoco se logra, se tramitan sucesivas propuestas."
+  },
+  {
+    p: "¿Qué ocurre si transcurridos dos meses desde la primera votación de investidura ningún candidato ha obtenido la confianza, según el artículo 99.5 CE?",
+    ops: ["El Gobierno en funciones prorroga su mandato por otros seis meses", "El Rey disuelve ambas Cámaras y convoca nuevas elecciones con el refrendo del Presidente del Congreso", "El Senado propone un nuevo candidato", "El Tribunal Constitucional interviene para designar Presidente provisional"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 99.5 CE prevé que si transcurridos dos meses desde la primera votación de investidura ningún candidato ha obtenido la confianza, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso. Es la solución constitucional al bloqueo parlamentario."
+  },
+  {
+    p: "Conforme al artículo 101 CE, ¿en qué supuestos cesa el Gobierno?",
+    ops: ["Solo tras la celebración de elecciones generales", "Tras elecciones generales, pérdida de la confianza parlamentaria prevista en la Constitución, o por dimisión o fallecimiento del Presidente", "Cuando el Senado aprueba una moción de censura por mayoría simple", "Cuando el Rey lo decide discrecionalmente"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 101.1 CE enumera tres causas de cese: celebración de elecciones generales, pérdida de la confianza parlamentaria (a través de la moción de censura o la cuestión de confianza rechazada) y dimisión o fallecimiento del Presidente. En todos los casos el Gobierno cesante continúa en funciones hasta la toma de posesión del nuevo."
+  },
+  {
+    p: "Según el artículo 102.2 CE, ¿qué requisito especial se exige para plantear una acusación contra el Presidente del Gobierno por traición o delito contra la seguridad del Estado?",
+    ops: ["Basta con la iniciativa del Fiscal General del Estado", "Requiere la iniciativa de la cuarta parte de los miembros del Congreso y la aprobación de la mayoría absoluta del mismo", "Requiere la iniciativa de la mitad más uno de los miembros del Congreso", "Puede ser planteada directamente por el Tribunal Supremo sin intervención parlamentaria"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 102.2 CE establece un doble requisito: iniciativa de la cuarta parte de los Diputados y aprobación de la mayoría absoluta del Congreso. El art. 102.3 añade que la prerrogativa real de gracia no es aplicable en estos supuestos, garantizando así la exigencia efectiva de responsabilidad penal."
+  },
+  {
+    p: "¿Con qué principios actúa la Administración Pública según el artículo 103.1 CE?",
+    ops: ["Eficacia, jerarquía, transparencia, participación y coordinación", "Eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho", "Legalidad, publicidad, celeridad, imparcialidad y economía procesal", "Objetividad, eficiencia, servicio al ciudadano y control judicial"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 103.1 CE establece que la Administración Pública sirve con objetividad los intereses generales y actúa con arreglo a los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. Estos principios son referencia constante en exámenes de oposición."
+  },
+  {
+    p: "Conforme al artículo 103.3 CE, ¿con arreglo a qué principios se regula el acceso a la función pública?",
+    ops: ["Los principios de mérito y capacidad", "Los principios de igualdad, mérito y capacidad", "Los principios de libre concurrencia y antigüedad", "Los principios de necesidad de servicio y eficiencia administrativa"],
+    c: 0,
+    exp: "<strong>Respuesta correcta: A.</strong> El art. 103.3 CE establece que la ley regulará el acceso a la función pública de acuerdo con los principios de mérito y capacidad. Aunque la igualdad es un requisito inherente, el artículo cita expresamente los de mérito y capacidad como rectores del acceso, que se concretan en el sistema de oposición y concurso-oposición."
+  },
+  {
+    p: "¿Cuál es la misión de las Fuerzas y Cuerpos de Seguridad según el artículo 104 CE?",
+    ops: ["Defender la integridad territorial y la soberanía nacional", "Proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana, bajo la dependencia del Gobierno", "Ejecutar las órdenes del poder judicial y custodiar las fronteras", "Velar por el cumplimiento de la legalidad constitucional"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 104.1 CE establece que las Fuerzas y Cuerpos de Seguridad, bajo la dependencia del Gobierno, tienen como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. Su estatuto se regula por ley orgánica (art. 104.2 CE)."
+  },
+  {
+    p: "¿Qué establece el artículo 106.2 CE sobre la responsabilidad patrimonial de la Administración?",
+    ops: ["Solo cabe reclamar indemnización si el daño fue causado por dolo del funcionario", "Los particulares tienen derecho a ser indemnizados por toda lesión que sufran en sus bienes o derechos como consecuencia del funcionamiento de los servicios públicos, salvo casos de fuerza mayor", "La Administración solo responde por daños causados en bienes materiales, no personales", "La responsabilidad queda excluida si el servicio actuó dentro de su competencia"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 106.2 CE reconoce el derecho de los particulares a ser indemnizados por toda lesión sufrida en sus bienes y derechos como consecuencia del funcionamiento de los servicios públicos. La única excepción contemplada es la fuerza mayor. No se exige culpa o dolo; basta la relación de causalidad entre el servicio y el daño."
+  },
+  {
+    p: "¿Qué órgano define el artículo 107 CE como supremo órgano consultivo del Gobierno?",
+    ops: ["El Tribunal de Cuentas", "El Consejo Económico y Social", "El Consejo de Estado", "El Defensor del Pueblo"],
+    c: 2,
+    exp: "<strong>Respuesta correcta: C.</strong> El art. 107 CE establece que el Consejo de Estado es el supremo órgano consultivo del Gobierno y que una ley orgánica regulará su composición y competencia. El Consejo de Estado emite dictámenes preceptivos o facultativos sobre proyectos normativos y otros asuntos, pero sus dictámenes no son vinculantes salvo excepción legal."
+  },
+  {
+    p: "Según el artículo 108 CE, ¿ante qué Cámara responde solidariamente el Gobierno en su gestión política?",
+    ops: ["Ante el Senado", "Ante el Congreso de los Diputados", "Ante ambas Cámaras conjuntamente reunidas", "Ante las Cortes Generales en sesión conjunta"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 108 CE establece que el Gobierno responde solidariamente en su gestión política ante el Congreso de los Diputados, no ante el Senado. Esta responsabilidad política se canaliza principalmente a través de la moción de censura (art. 113 CE) y la cuestión de confianza (art. 112 CE)."
+  },
+  {
+    p: "¿Qué consecuencia tiene una interpelación según el artículo 111.2 CE?",
+    ops: ["El Gobierno debe presentar su dimisión inmediata", "Toda interpelación puede dar lugar a una moción en la que la Cámara manifieste su posición", "La Cámara puede votar una moción de censura automáticamente", "La interpelación solo tiene efectos si la apoya la mayoría absoluta de la Cámara"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 111.2 CE establece que toda interpelación podrá dar lugar a una moción en la que la Cámara manifieste su posición. Esta moción no es una moción de censura (que tiene requisitos propios y consecuencias específicas), sino una manifestación de la postura de la Cámara ante la actuación del Gobierno interpelado."
+  },
+  {
+    p: "Conforme al artículo 112 CE, ¿qué mayoría se requiere para que la cuestión de confianza se entienda otorgada al Presidente del Gobierno?",
+    ops: ["Mayoría absoluta de los Diputados", "Mayoría simple de los Diputados (más votos a favor que en contra)", "Mayoría de tres quintos de los Diputados", "Mayoría absoluta del Senado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 112 CE establece que la confianza en la cuestión de confianza se entenderá otorgada cuando vote a favor de la misma la mayoría simple de los Diputados. A diferencia de la investidura (art. 99 CE), aquí solo se requiere mayoría simple, lo que facilita la continuidad del Gobierno."
+  },
+  {
+    p: "Según el artículo 113.2 CE, ¿qué requisitos formales debe cumplir una moción de censura?",
+    ops: ["Ser propuesta por la mayoría absoluta del Congreso e incluir un candidato alternativo", "Ser propuesta por al menos la décima parte de los Diputados e incluir un candidato a la Presidencia del Gobierno", "Ser propuesta por un grupo parlamentario con más de cincuenta diputados", "Ser propuesta por la quinta parte de los Diputados sin necesidad de candidato alternativo"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 113.2 CE exige que la moción de censura sea propuesta por al menos la décima parte de los Diputados (actualmente 35 de 350) y que incluya un candidato a la Presidencia del Gobierno. Es la moción de censura constructiva, inspirada en el modelo alemán, que garantiza una alternativa de gobierno antes de cesar al existente."
+  },
+  {
+    p: "¿Cuántos días deben transcurrir desde la presentación de la moción de censura hasta que pueda ser votada, según el artículo 113.3 CE?",
+    ops: ["Al menos dos días", "Al menos cinco días", "Al menos diez días", "Al menos siete días"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 113.3 CE establece que la moción de censura no podrá ser votada hasta que transcurran cinco días desde su presentación. En los dos primeros días de ese plazo podrán presentarse mociones alternativas. Este plazo permite la reflexión y la posible negociación política antes de la votación."
+  },
+  {
+    p: "¿Qué ocurre con los firmantes de una moción de censura que no prospera, según el artículo 113.4 CE?",
+    ops: ["Son sancionados con la pérdida del derecho al voto durante tres meses", "No podrán presentar otra moción de censura durante el mismo período de sesiones", "Son excluidos del grupo parlamentario durante seis meses", "Ninguna consecuencia jurídica específica"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 113.4 CE dispone que si la moción de censura no fuere aprobada, sus signatarios no podrán presentar otra durante el mismo período de sesiones. Esta limitación evita el uso abusivo de la moción de censura como instrumento de desgaste político continuado."
+  },
+  {
+    p: "Si el Congreso adopta una moción de censura según el artículo 114.2 CE, ¿qué sucede con el candidato incluido en la misma?",
+    ops: ["El candidato debe pasar por una nueva votación de investidura", "El candidato se entenderá investido de la confianza de la Cámara y el Rey le nombrará Presidente del Gobierno", "El candidato pasa a ser Presidente en funciones durante treinta días", "El candidato debe obtener el refrendo del Senado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 114.2 CE establece que si el Congreso adopta una moción de censura, el Gobierno presenta su dimisión al Rey y el candidato incluido en la moción se entenderá automáticamente investido de la confianza de la Cámara, por lo que el Rey le nombrará Presidente del Gobierno sin nueva votación."
+  },
+  {
+    p: "¿Puede el Presidente del Gobierno proponer la disolución de las Cámaras mientras está en trámite una moción de censura, según el artículo 115.2 CE?",
+    ops: ["Sí, siempre que cuente con la autorización del Senado", "No, la propuesta de disolución no puede presentarse cuando esté en trámite una moción de censura", "Sí, pero solo puede disolver el Senado, no el Congreso", "Sí, con la autorización previa del Rey"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 115.2 CE prohíbe expresamente que la propuesta de disolución se presente cuando esté en trámite una moción de censura. Esta limitación protege el procedimiento parlamentario de control y evita que el Gobierno escape a una moción de censura mediante la disolución de las Cámaras."
+  },
+  {
+    p: "Según el artículo 116.2 CE, ¿quién declara el estado de alarma y qué plazo máximo inicial tiene sin necesidad de autorización?",
+    ops: ["El Congreso de los Diputados, con un plazo máximo de treinta días", "El Gobierno mediante decreto acordado en Consejo de Ministros, por un plazo máximo de quince días, dando cuenta al Congreso", "El Presidente del Gobierno mediante real decreto, con un plazo máximo de treinta días", "El Rey, a propuesta del Gobierno, sin plazo determinado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 116.2 CE establece que el estado de alarma es declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso. La prórroga requiere la autorización del Congreso. El Congreso no puede ser disuelto durante la vigencia de los estados de alarma, excepción o sitio."
+  },
+  {
+    p: "¿Quién puede declarar el estado de sitio y cuál es el procedimiento según el artículo 116.4 CE?",
+    ops: ["El Gobierno mediante decreto del Consejo de Ministros, por un plazo máximo de treinta días", "La mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno", "El Rey, a propuesta conjunta del Gobierno y el Congreso", "El Congreso por mayoría de tres quintos, a propuesta del Gobierno o del Senado"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 116.4 CE establece que el estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. Es el único de los tres estados de emergencia que declara el propio Congreso (no el Gobierno). El Congreso determina su ámbito territorial, duración y condiciones."
+  },
+  {
+    p: "Según el artículo 116.6 CE, ¿qué principio se mantiene inalterado durante la vigencia de los estados de alarma, excepción o sitio?",
+    ops: ["El principio de legalidad formal", "El principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes", "El principio de separación de poderes en su configuración ordinaria", "El principio de inviolabilidad parlamentaria"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 116.6 CE dispone expresamente que la declaración de los estados de alarma, excepción y sitio no modifica el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes. Esto significa que el Gobierno no puede blindarse de responsabilidad jurídica amparándose en la emergencia declarada."
+  },
+  {
+    p: "¿Cuál es el plazo máximo del estado de excepción y en qué condiciones puede prorrogarse, según el artículo 116.3 CE?",
+    ops: ["Quince días prorrogables por otros quince, con el mismo procedimiento de declaración", "Treinta días prorrogables por otro plazo igual, con los mismos requisitos que la declaración inicial", "Dos meses prorrogables por un mes más, con autorización del Congreso", "Cuarenta y cinco días improrrogables"],
+    c: 1,
+    exp: "<strong>Respuesta correcta: B.</strong> El art. 116.3 CE establece que el estado de excepción tiene una duración que no puede exceder de treinta días, prorrogables por otro plazo igual con los mismos requisitos. La declaración requiere previa autorización del Congreso. Los efectos, ámbito territorial y duración deben determinarse expresamente en la autorización parlamentaria."
+  }
+];
+
+// ── ALEATORIZACIÓN ──
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function prepararPreguntas() {
+  const mezcladas = shuffle(BANCO);
+  return mezcladas.map(q => {
+    const respuestaTextoCorrecta = q.ops[q.c];
+    const opsNuevas = shuffle(q.ops);
+    const nuevoC = opsNuevas.indexOf(respuestaTextoCorrecta);
+    return { p: q.p, ops: opsNuevas, c: nuevoC, exp: q.exp };
+  });
+}
+
+let preguntas = [];
+let respondidas = 0, correctas = 0, incorrectas = 0;
+
+function actualizarBarra() {
+  const pct = preguntas.length ? (respondidas / preguntas.length) * 100 : 0;
+  document.getElementById('barraFill').style.width = pct + '%';
+  document.getElementById('barraNum').textContent = respondidas + ' / ' + preguntas.length;
+  document.getElementById('scoreOk').textContent = '✓ ' + correctas;
+  document.getElementById('scoreKo').textContent = '✗ ' + incorrectas;
+}
+
+function responder(qi, oi) {
+  const q = preguntas[qi];
+  const btns = document.querySelectorAll('[data-qi="' + qi + '"]');
+  btns.forEach(b => b.disabled = true);
+  btns.forEach((b, j) => {
+    if (j === q.c) b.classList.add('correcta');
+    else if (j === oi && oi !== q.c) b.classList.add('incorrecta');
+  });
+  document.getElementById('exp-' + qi).classList.add('visible');
+  respondidas++;
+  if (oi === q.c) correctas++; else incorrectas++;
+  actualizarBarra();
+  if (respondidas === preguntas.length) setTimeout(mostrarResultado, 700);
+}
+
+function mostrarResultado() {
+  const pct = Math.round((correctas / preguntas.length) * 100);
+  document.getElementById('resPunt').innerHTML = correctas + ' <span>/ ' + preguntas.length + '</span>';
+  document.getElementById('resCorr').textContent = correctas;
+  document.getElementById('resIncorr').textContent = incorrectas;
+  document.getElementById('resPct').textContent = pct + '%';
+
+  let txt, col, bg;
+  if (pct >= 90)      { txt = '🏆 Sobresaliente'; col = '#166534'; bg = '#f0fdf4'; }
+  else if (pct >= 75) { txt = '✅ Notable';        col = '#1e3a5f'; bg = '#eff6ff'; }
+  else if (pct >= 60) { txt = '📘 Aprobado';       col = '#92400e'; bg = '#fffbeb'; }
+  else                { txt = '❌ Insuficiente — ¡Sigue practicando!'; col = '#991b1b'; bg = '#fef2f2'; }
+
+  document.getElementById('resCalif').innerHTML =
+    '<span class="calif-badge" style="background:' + bg + ';color:' + col + '">' + txt + '</span>';
+
+  const el = document.getElementById('resultado');
+  el.classList.add('visible');
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function render() {
+  respondidas = 0; correctas = 0; incorrectas = 0;
+  preguntas = prepararPreguntas();
+  actualizarBarra();
+
+  const main = document.getElementById('mainContent');
+  main.innerHTML = '';
+  const letras = ['A','B','C','D'];
+
+  preguntas.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const opsHTML = q.ops.map((op, j) =>
+      `<button class="opcion" data-qi="${i}" onclick="responder(${i},${j})">
+        <span class="letra">${letras[j]})</span><span>${op}</span>
+      </button>`
+    ).join('');
+
+    card.innerHTML =
+      `<div class="card-num">Pregunta ${i + 1} de ${preguntas.length}</div>
+       <div class="card-pregunta">${q.p}</div>
+       <div class="opciones">${opsHTML}</div>
+       <div class="explicacion" id="exp-${i}">${q.exp}</div>`;
+
+    main.appendChild(card);
+  });
+
+  // Separador y resultado final
+  const sep = document.createElement('div');
+  sep.className = 'divider';
+  sep.textContent = 'Fin del test';
+  main.appendChild(sep);
+
+  const res = document.createElement('div');
+  res.className = 'resultado';
+  res.id = 'resultado';
+  res.innerHTML =
+    `<div class="resultado-eyebrow">Resultado final</div>
+     <h2>Test completado</h2>
+     <div class="resultado-nota" id="resPunt">0 <span>/ 50</span></div>
+     <div id="resCalif"></div>
+     <div class="stats">
+       <div class="stat"><div class="stat-num" id="resCorr" style="color:#166534">0</div><div class="stat-lab">Correctas</div></div>
+       <div class="stat"><div class="stat-num" id="resIncorr" style="color:#991b1b">0</div><div class="stat-lab">Incorrectas</div></div>
+       <div class="stat"><div class="stat-num" id="resPct">0%</div><div class="stat-lab">% aciertos</div></div>
+     </div>
+     <p class="resultado-hint">Desplázate hacia arriba para revisar las explicaciones de cada pregunta.</p>
+     <button class="btn btn-naranja" onclick="render(); window.scrollTo({top:0,behavior:'smooth'})">↺ Repetir con nuevo orden</button>`;
+  main.appendChild(res);
+}
+
+render();
+</script>
+</body>
+</html>
